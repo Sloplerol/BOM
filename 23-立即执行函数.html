@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 立即执行函数好处是每一个都是独立的局部空间不互相冲突
+        //第一种写法(function(){})()
+        (function(a){
+            console.log(a);
+        })(3)//这个小括号相当于去调用函数
+        //第二种写法(function(){}())
+        (function(a,b){
+            console.log(a*b);
+        }(1,2))
+    </script>
+</body>
+</html>

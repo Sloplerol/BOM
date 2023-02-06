@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 生命周期当关闭浏览器窗口结束 -->
+    <input type="text">
+    <button class="store">存储数据</button>
+    <button class="get">获取数据</button>
+    <button class="delete">删除数据</button>
+    <button class="blank">清空数据</button>
+    <script>
+        var ipt = document.querySelector('input');
+        var store = document.querySelector('.store');
+        var get = document.querySelector('.get');
+        var del = document.querySelector('.delete');
+        var blank = document.querySelector('.blank');
+        store.addEventListener('click',function(){
+            var value = ipt.value;
+            var pwd = ipt.value;
+            sessionStorage.setItem('uname',value);
+            sessionStorage.setItem('pwd',pwd);
+            
+        })
+        get.addEventListener('click',function(){
+            console.log(sessionStorage.getItem('uname'));
+            
+        })
+        del.addEventListener('click',function(){
+            sessionStorage.removeItem('uname');
+            
+        })
+        blank.addEventListener('click',function(){
+            sessionStorage.clear();
+            
+        })
+    </script>
+</body>
+</html>

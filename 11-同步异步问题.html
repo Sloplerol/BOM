@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log('666');
+        setTimeout(function(){
+            console.log('777');
+        },1000);
+        console.log('999');
+        //js异步实现节省最大时间
+        // 执行时先把回调函数放到异步任务队列中
+        // 回调函数由异步处理程序判断是否需要将其放入异步队列中
+        // 当事件触发就将其写入
+        // 先执行同步再执行异步
+    </script>
+</body>
+</html>

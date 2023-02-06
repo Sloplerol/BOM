@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .focus {
+            overflow: hidden;
+            position: relative;
+            width: 721px;
+            height: 455px;
+            
+        }
+        .focus ul {
+            position: absolute;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 500%;
+        }
+        .focus ul li {
+            float: left;
+        }
+        .focus ol {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            bottom: 10px;
+            left: 120px;
+            position: absolute;
+        }
+        .focus ol li {
+            margin: 0 10px;
+            float: left;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+        [class^=arrow] {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .arrow_l {
+            left: 0;
+        }
+        .arrow_r {
+            right: 0;
+        }
+        .current {
+            background-color: white;
+        }
+    </style>
+     <script src="/js/animation.js"></script>
+</head>
+<body>
+    <div class="focus">
+        <ul>
+            <li>
+                <img src="/images/focus.jpg" alt="">
+            </li>
+            <li>
+                <img src="/images/focus1.jpg" alt="">
+            </li>
+            <li>
+                <img src="/images/focus2.jpg" alt="">
+            </li>
+            <li>
+                <img src="/images/focus3.jpg" alt="">
+            </li>
+        </ul>
+        <ol></ol>
+        <div class="arrow_l"><img src="/images/arrow-prev.png" alt=""></div>
+        <div class="arrow_r"><img src="/images/arrow-next.png" alt=""></div>
+    </div>
+    <script>
+        var focu = document.querySelector('.focus');
+        var ul = focu.querySelector('ul');
+        var arrow_l = document.querySelector('.arrow_l');
+        var arrow_r = document.querySelector('.arrow_r');
+        var ol = focu.querySelector('ol');
+        var focu_width = focu.offsetWidth;
+        focu.addEventListener('mouseover',function(){
+            arrow_l.style.display = 'block';
+            arrow_r.style.display = 'block';
+            clearInterval(timer);
+            timer = null;
+        })
+        focu.addEventListener('mouseout',function(){
+            arrow_l.style.display = 'none';
+            arrow_r.style.display = 'none';
+            setInterval(function(){
+            arrow_r.click();
+        },3000)
+        })
+        for (var i = 0;i<ul.children.length;i++) {
+            var li = document.createElement('li');
+            li.setAttribute('index',i);
+            ol.appendChild(li);
+            ol.children[0].className = 'current';
+            li.addEventListener('click',function(){
+                for (var j = 0;j<ol.children.length;j++) {
+                    ol.children[j].className = '';
+                }
+                this.className = 'current';
+                var index = this.getAttribute('index');
+                num = index;
+                circle = index;
+                animation(ul,-index*focu_width);
+            })
+        }
+        var first = ul.children[0].cloneNode(true);
+        ul.appendChild(first);
+        var num = 0;
+        var circle = 0;
+        var flag = false;
+        arrow_r.addEventListener('click',function(){
+            if (num==ul.children.length-1) {
+                num=0;
+                ul.style.left = 0;
+            }
+            num++;
+            animation(ul,-num*focu_width);
+            circle++;
+            if (circle==ol.children.length) {
+                circle = 0;
+            }
+            for (var o = 0;o<ol.children.length;o++) {
+                ol.children[o].className = '';
+            }
+            ol.children[circle].className = 'current';
+            
+        })
+        arrow_l.addEventListener('click',function(){
+            if (num==0) {
+                num=ul.children.length-1;
+                ul.style.left = -num*focu_width + 'px';
+            }
+            num--;
+            animation(ul,-num*focu_width);
+            circle--;
+            if (circle<0) {
+                circle = ol.children.length-1;
+            }
+            for (var o = 0;o<ol.children.length;o++) {
+                ol.children[o].className = '';
+            }
+            ol.children[circle].className = 'current';
+            
+        })
+        var timer = setInterval(function(){
+            arrow_r.click();
+        },3000)
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .father {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-color: aqua;
+            margin: 100px;
+        }
+        .son {
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="son"></div>
+    </div>
+    <script>
+        var father = document.querySelector('.father');
+        console.log(father.offsetTop);
+        console.log(father.offsetLeft);
+        // offsetLeft测量的是father距离左边的长度
+        var son = document.querySelector('.son');
+        console.log(son.offsetLeft);
+        console.log(son.offsetTop);
+        // 没有定位以body为主
+        // 若想测量son距离father边框的距离则需要father有定位
+        console.log(father.offsetWidth);
+        console.log(father.offsetHeight);
+        console.log(son.offsetHeight);
+        // offsetHeight和width动态获取盒子大小
+        console.log(son.offsetParent);
+        // 若没有父亲则返回body
+        // offsetParent返回的是带有定位的最近一级的父亲而parentNode返回的是有无定位的父亲
+    </script>
+</body>
+</html>

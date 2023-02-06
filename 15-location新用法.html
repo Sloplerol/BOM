@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>dianji</button>
+    <script>
+        var btn = document.querySelector('button');
+        btn.addEventListener('click',function(){
+            // location.assign('https://www.baidu.com');
+            // 和href用法一样可以返回页面
+            location.replace('https://www.baidu.com')
+            // 不能实现页面返回效果
+            location.reload();
+            // 当什么都不加相当于浏览器刷新当里面参数为true相当于强制刷新
+        })
+    </script>
+</body>
+</html>

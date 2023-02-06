@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+        .nav {
+            width: 400px;
+            height: 50px;
+            background-color: aqua;
+        }
+        .cloud {
+            position: absolute;
+            background: url(/images/cloud.gif) no-repeat;
+            width: 83px;
+            height: 42px;
+        }
+        .nav ul {
+            position: absolute;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav ul li {
+            float: left;
+            width: 100px;
+            height: 100%;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <span class="cloud"></span>
+        <ul>
+            <li>123</li>
+            <li>123</li>
+            <li>123</li>
+            <li>123</li>
+        </ul>
+    </div>
+    <script>
+        var nav = document.querySelector('.nav')
+        var lis = nav.querySelectorAll('li');
+        var cloud = document.querySelector('.cloud');
+        var nav_leftwidth = nav.offsetLeft;
+        for (var i = 0;i<lis.length;i++) {
+            lis[i].addEventListener('mouseenter',function(){
+                animation(cloud,this.offsetLeft+nav_leftwidth);
+            })
+            lis[i].addEventListener('mouseleave',function(){
+                animation(cloud,current+nav_leftwidth);
+            })
+            lis[i].addEventListener('click',function(){
+                current = this.offsetLeft;
+            })
+        }
+    </script>
+    <script src="/js/animation.js"></script>
+</body>
+</html>

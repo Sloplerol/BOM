@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+        span {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            margin: 0 20px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <span class="hour">1</span>
+    <span class="minute">2</span>
+    <span class="second">3</span>
+    <script>
+        // 每隔一秒执行一次
+        // setInterval(function(){
+        //     console.log('6');
+        // },1000)
+        var hour = document.querySelector('.hour');
+        var minute = document.querySelector('.minute');
+        var second = document.querySelector('.second');
+        var future = +new Date('2022-11-30 8:00:00');
+        function count(){
+            var now = +new Date();
+            var residue = (future-now)/1000;
+            var h = parseInt(residue/60/60%24);
+            var m = parseInt(residue/60%60);
+            var s = parseInt(residue%60);
+            h = h<10 ? '0'+h : h;
+            hour.innerHTML = h;
+            m = m<10 ? '0'+m : m;
+            minute.innerHTML = m;
+            s = s<10 ? '0'+s : s;
+            second.innerHTML = s;
+        }
+        // 为了防止刷新后一秒钟显示内容应该提前调用一次
+        count();
+        setInterval(count,1000);
+
+    </script>
+</body>
+</html>

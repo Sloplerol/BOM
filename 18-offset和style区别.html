@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 400px;
+            height: 400px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" style="width:400px"></div>
+    <script>
+        var box = document.querySelector('.box');
+        box.addEventListener('click',function(){
+            // console.log(box.offsetWidth);
+            // offset得到的是不带单位的
+            box.style.width = '700px';
+            console.log(box.style.width);
+            // style得到的只能是行内的样式表内嵌的得不到
+            // box.offsetWidth = '300px';
+            // offsetWidth是只读属性只能读写
+            // 而style是读写属性既可以读写又可以赋值
+            
+        })
+    </script>
+</body>
+</html>

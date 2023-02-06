@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        div {
+            width: 300px;
+            height: 300px;
+            background-color: aqua;
+            position: absolute;
+        }
+        button {
+            
+            width: 60px;
+            height: 30px;
+        }
+        
+    </style>
+</head>
+<body>
+    <button class="btn400">400</button>
+    <button class="btn800">800</button>
+    <div></div>
+    <script>
+        function animation(obj,target,callback){
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function(){
+                
+                var step = (target-obj.offsetLeft)/10;
+                step = step>0 ? Math.ceil(step) : Math.floor(step);
+                // step有可能出现无理数的情况所以我们应该将其取整
+                // step宁可多也不能少当正的时候向上取整当负的时候向下取整
+                if (obj.offsetLeft==target) {
+                    clearInterval(obj.timer);
+                    //回调函数写到定时器结束里面当定时器结束执行
+                    if (callback) {
+                        callback();
+                    }
+                }else {
+                    div.style.left = obj.offsetLeft + step + 'px';
+                }
+            },30)
+        }
+        var div = document.querySelector('div');
+        var btn400 = document.querySelector('.btn400');
+        var btn800 = document.querySelector('.btn800');
+        btn400.addEventListener('click',function(){
+            animation(div,400,function(){
+                div.style.backgroundColor = 'yellow';
+                // 回调函数当定时器结束后执行
+            });
+        })
+        btn800.addEventListener('click',function(){
+            animation(div,800);
+            
+        })
+    </script>
+</body>
+</html>

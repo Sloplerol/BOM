@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+        ul,ol {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .focus {
+            position: relative;
+            width: 721px;
+            height: 455px;
+            overflow: hidden;
+
+        }
+        .focus ul {
+            width: 500%;
+            position: absolute;
+        }
+        .focus ul li {
+            float: left;
+        }
+        [class^=arrow] {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .arrow_l {
+            left: 0;
+        }
+        .arrow_r {
+            right: 0;
+        }
+        .focus ol {
+            position: absolute;
+            bottom: 10px;
+            left: 120px;
+        }
+        .focus ol li {
+            float: left;
+            border: 1px solid white;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        .current {
+            background-color: white;
+        }
+    </style>
+    <script src="/js/animation.js"></script>
+</head>
+<body>
+    <div class="focus">
+        <ul>
+            <li>
+                <img src="/images/focus.jpg" alt="">
+            </li>
+            <li>
+                <img src="/images/focus1.jpg" alt="">
+            </li>
+            <li>
+                <img src="/images/focus2.jpg" alt="">
+            </li>
+            <li>
+                <img src="/images/focus3.jpg" alt="">
+            </li>
+        </ul>
+        <div class="arrow_l">
+            <img src="/images/arrow-prev.png" alt="">
+        </div>
+        <div class="arrow_r">
+            <img src="/images/arrow-next.png" alt="">
+        </div>
+        <ol></ol>
+    </div>
+    <script>
+        // 因为focus是特殊字符所以我起名为focu
+        //获取元素
+        var focu = document.querySelector('.focus');
+        var ul = focu.querySelector('ul');
+        var arrow_l = document.querySelector('.arrow_l');
+        var arrow_r = document.querySelector('.arrow_r');
+        // 获取focus的长度
+        var focu_width = focu.offsetWidth;
+        //创建触碰显示左右箭头事件
+        focu.addEventListener('mouseover',function(){
+            arrow_l.style.display = 'block';
+            arrow_r.style.display = 'block';
+            // 当鼠标触碰的时候清除定时器
+            clearInterval(timer);
+            // 清除后将timer设置为空对象好下次存储定时器
+            timer = null;
+        })
+        focu.addEventListener('mouseout',function(){
+            arrow_l.style.display = 'none';
+            arrow_r.style.display = 'none';
+            // 当鼠标离开时开启定时器
+            timer = setInterval(function(){
+            arrow_r.click();
+        },2000)
+        })
+        //下方圆点模块
+        var ol = document.querySelector('ol');
+        // 通过for循环查看有多少张图从而生成几个ol下的li
+        for (var i = 0;i<ul.children.length;i++) {
+            //创建li
+            var li = document.createElement('li');
+            // 添加li的同时添加自定义属性
+            li.setAttribute('index',i);
+            ol.appendChild(li);
+            //排他思想 实现小圆点点击指定背景变白
+            ol.children[0].className = 'current';
+            li.addEventListener('click',function(){
+                for (var j = 0;j<ol.children.length;j++) {
+                    ol.children[j].className = '';
+                }
+                this.className = 'current';
+                // 利用自定义属性给按钮设置index值并控制ul的移动
+                var index = this.getAttribute('index');
+                //因为num和circle和index毫无关系所以会出现当点击下面圆点的时候num还是0点右箭头从头向右移动的bug
+                // 所以这一步起到绑定num circle和index下标相同好同步的作用
+                num = index;
+                circle = index;
+                // 调用animation封装函数
+                // 移动的是ul往左移动
+                animation(ul,-index*focu_width);
+            })
+            
+        }
+        //克隆第一个实现无缝链接 相当于在最后一张图片后面添加第一张图片在跳转的时候设置overflow人眼是看不出来的
+        var first = ul.children[0].cloneNode(true);
+        ul.appendChild(first);
+        // 设置num和circle全局变量
+        // num和箭头有关
+        // circle和圆点有关
+        var num = 0;
+        var circle = 0;
+        // 设置节流阀 做到当动画加载完才能翻转动画的作用
+        var flag = true;
+        arrow_r.addEventListener('click',function(){
+            if(flag) {
+                flag = false;
+                if (num==ul.children.length-1) {
+                // 当到最后一张图片的时候将其left设置为零同时重置num为0
+                ul.style.left = 0;
+                num=0;
+            }
+            //num一定要写后面 因为当到最后一张时清空并且再num++将num变为1跳转到第二张
+            num++;
+            animation(ul,-num*focu_width,function(){
+                flag = true;
+            });
+            // 写前面 因为circle写前面起到直接锁0的效果
+            circle++;
+            if (circle == ol.children.length) {
+                // 当到最后一个后将circle重置
+                circle = 0;
+            }
+            // 排他思想
+            for (var o = 0;o<ol.children.length;o++) {
+                ol.children[o].className = '';
+            }
+            ol.children[circle].className = 'current';
+            }
+        })
+        arrow_l.addEventListener('click',function(){
+            if(flag) {
+                flag = false;
+                if (num==0) {
+                num = ul.children.length-1;
+                ul.style.left = (-num*focu_width) + 'px';
+                //因为是往左走方向 left得是负值实现或者left为正修改animation里的正负也可以 实现左右反向的效果
+            }
+            //一定要写后面 因为当到最后一张时清空并且再num++将num变为1跳转到第二张
+            num--;
+            animation(ul,-num*focu_width,function(){
+                flag = true;
+            });
+            // 写前面 因为circle写前面起到直接锁0的效果
+            circle--;
+            if (circle<0) {
+                // 当circle小于零从最后一位依次往前设置排他
+                circle = ol.children.length-1;
+            }
+            for (var o = 0;o<ol.children.length;o++) {
+                ol.children[o].className = '';
+            }
+            ol.children[circle].className = 'current';
+            }
+            
+        })
+        // 设置定时器做到2s后自动切换的效果
+        var timer = setInterval(function(){
+            arrow_r.click()
+        },2000)
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .bg {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <button>dianji</button>
+    <div class="one two"></div>
+    <script>
+        var div = document.querySelector('.one');
+        var btn = document.querySelector('button');
+        // classList以伪数组的形式存储两个class名
+        console.log(div.classList);
+        console.log(div.classList[0]);
+        // classList可以在后面添加类名
+        div.classList.add('three');
+        // 添加类名不用加点
+        console.log(div);
+        //classList可以精确的删除其中的一个
+        div.classList.remove('two');
+        btn.addEventListener('click',function(){
+            document.body.classList.toggle('bg');
+            //toggle勘测是否bg类若有可以达到自动切换的效果
+        })
+    </script>
+</body>
+</html>

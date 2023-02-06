@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .father {
+            margin: 100px auto;
+            width: 400px;
+            height: 400px;
+            background-color: aquamarine;
+        }
+        .son {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son"></div>
+    </div>
+    <script>
+        var father = document.querySelector('.father');
+        //mouseover在经过其或者是他里面的子元素都会触发效果
+        // mouseenter只是经过父元素的时候触发效果没有冒泡的效果 mouseleave和mouseenter对立
+        father.addEventListener('mouseenter',function(){
+            console.log('asdas');
+        })
+    </script>
+</body>
+</html>

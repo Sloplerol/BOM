@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 等待页面加载完再执行js语句
+        // 最多写一个否则按最后一个为准
+        window.onload = function(){
+            function fn(){
+                var btn = document.querySelector('button');
+                btn.addEventListener('click',function(){
+                    alert('sad');
+                })
+            }
+            fn();
+        }
+        // 等待页面所有元素加载完执行
+        window.addEventListener('load',function(){
+            alert('asjd');
+        })
+        //等到DOM识别完就打印
+        window.addEventListener('DOMContentLoaded',function(){
+            alert('sadj');
+        })
+    </script>
+    <button>dianji</button>
+</body>
+</html>

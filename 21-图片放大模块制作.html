@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .prew {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            border: 1px solid black;
+        }
+        .prew>img {
+            width: 100%;
+            position: absolute;
+        }
+        .mask {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            opacity: 0.5;
+            position: absolute;
+            display: none;
+            
+        }
+        .big {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            left: 300px;
+            display: none;
+        }
+        .big img {
+            position: absolute;
+            width: 100%;
+        }
+        .big_mask {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background-color: white;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="prew">
+        <img src="/images/b3.png" alt="">
+        <div class="mask"></div>
+        <div class="big">
+            <img src="/images/big.jpg" alt="" class="big_images">
+            <div class="big_mask"></div>
+        </div>
+    </div>
+    <script>
+        var prew = document.querySelector('.prew');
+        var mask = document.querySelector('.mask');
+        var big = document.querySelector('.big');
+        var big_mask = document.querySelector('.big_mask');
+        var big_images = document.querySelector('.big_images');
+        prew.addEventListener('mouseover',function(){
+            mask.style.display = 'block';
+            big.style.display = 'block';
+        })
+        prew.addEventListener('mouseout',function(){
+            mask.style.display = 'none';
+            big.style.display = 'none';
+        })
+        prew.addEventListener('mousemove',function(e){
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+            var cal_x = x - mask.offsetWidth/2 ;
+            var cal_y = y - mask.offsetHeight/2 ;
+            var width_decline = prew.offsetWidth - mask.offsetWidth;
+            var height_decline = prew.offsetHeight - mask.offsetHeight;
+            if (cal_x<0) {
+                cal_x = 0;
+            }else if (cal_x>width_decline) {
+                cal_x = width_decline;
+            }
+            if (cal_y<0) {
+                cal_y = 0;
+            }else if (cal_y>height_decline) {
+                cal_y = height_decline;
+            }
+            mask.style.left = cal_x + 'px';
+            mask.style.top = cal_y + 'px';
+            var big_declineX = big.offsetWidth - big_mask.offsetWidth;
+            var big_declineY = big.offsetHeight - big_mask.offsetHeight;
+            var big_moveX = cal_x * big_declineX / width_decline;
+            var big_moveY = cal_y * big_declineY / height_decline;
+            big_mask.style.left = big_moveX + 'px';
+            big_mask.style.top = big_moveY + 'px';
+        })
+    </script>
+</body>
+</html>
